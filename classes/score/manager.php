@@ -24,8 +24,6 @@ use mod_videotrackerultimate\metrics\provider as metrics_provider;
 use mod_videotrackerultimate\rule\engine;
 use mod_videotrackerultimate\task\recalculate_user as recalculate_user_task;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Authoritative server-side Engagement Score service.
  *

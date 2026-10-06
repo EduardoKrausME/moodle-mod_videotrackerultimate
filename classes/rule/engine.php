@@ -20,8 +20,6 @@ use invalid_parameter_exception;
 use local_video_bridge\analytics\manager as analytics_manager;
 use local_video_bridge\analytics\metrics;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Deterministic, allow-listed Engagement Score rule engine.
  *
@@ -30,15 +28,34 @@ defined('MOODLE_INTERNAL') || die;
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 final class engine {
+    /** @var string */
     public const PERCENT_GTE = 'percent_gte';
+
+    /** @var string */
     public const WATCHTIME_GTE = 'watchtime_gte';
+
+    /** @var string */
     public const SESSIONS_GTE = 'sessions_gte';
+
+    /** @var string */
     public const SESSIONS_LTE = 'sessions_lte';
+
+    /** @var string */
     public const MAXRATE_LTE = 'maxrate_lte';
+
+    /** @var string */
     public const REACHED_END = 'reachedend';
+
+    /** @var string */
     public const SEGMENT_WATCHED = 'segment_watched';
+
+    /** @var string */
     public const SEEKCOUNT_LTE = 'seekcount_lte';
+
+    /** @var string */
     public const REPLAYCOUNT_GTE = 'replaycount_gte';
+
+    /** @var string */
     public const REGULARITY_GTE = 'regularity_gte';
 
     /**

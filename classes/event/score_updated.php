@@ -16,8 +16,6 @@
 
 namespace mod_videotrackerultimate\event;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Fired after an authoritative Engagement Score recalculation.
  *

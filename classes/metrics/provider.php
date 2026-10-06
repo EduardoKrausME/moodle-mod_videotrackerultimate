@@ -21,8 +21,6 @@ use local_video_bridge\analytics;
 use local_video_bridge\analytics\manager as analytics_manager;
 use local_video_bridge\analytics\metrics;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Reads the stable consolidated metrics contract owned by Video Bridge.
  *

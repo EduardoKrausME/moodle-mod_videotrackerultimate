@@ -24,8 +24,6 @@ use core_external\external_value;
 use mod_videotrackerultimate\reporting;
 use mod_videotrackerultimate\score\manager as score_manager;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Secure recalculation External API.
  *

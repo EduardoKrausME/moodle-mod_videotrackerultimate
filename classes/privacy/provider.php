@@ -23,8 +23,6 @@ use core_privacy\local\request\contextlist;
 use core_privacy\local\request\transform;
 use core_privacy\local\request\writer;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Privacy provider for cached playback evidence and scores.
  *

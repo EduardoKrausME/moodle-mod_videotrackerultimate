@@ -18,8 +18,6 @@ namespace mod_videotrackerultimate;
 
 use local_video_bridge\source\manager as bridge_manager;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Configured Video Bridge source manager.
  *

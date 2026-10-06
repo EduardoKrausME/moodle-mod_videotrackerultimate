@@ -18,8 +18,6 @@ namespace mod_videotrackerultimate;
 
 use mod_videotrackerultimate\score\manager as score_manager;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Observers for shared Video Bridge telemetry.
  *

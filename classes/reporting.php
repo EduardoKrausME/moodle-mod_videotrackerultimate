@@ -19,8 +19,6 @@ namespace mod_videotrackerultimate;
 use context_module;
 use mod_videotrackerultimate\score\manager as score_manager;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Group-aware reporting helpers.
  *

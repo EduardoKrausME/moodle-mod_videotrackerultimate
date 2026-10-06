@@ -16,8 +16,6 @@
 
 namespace mod_videotrackerultimate\metrics;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Normalized metrics snapshot consumed by the deterministic rule engine.
  *

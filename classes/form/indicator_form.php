@@ -18,8 +18,6 @@ namespace mod_videotrackerultimate\form;
 
 use mod_videotrackerultimate\rule\engine;
 
-defined('MOODLE_INTERNAL') || die;
-
 require_once($CFG->libdir . '/formslib.php');
 
 /**

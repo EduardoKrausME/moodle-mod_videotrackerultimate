@@ -16,8 +16,6 @@
 
 namespace mod_videotrackerultimate\grade;
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Gradebook integration.
  *
