@@ -26,8 +26,12 @@ use mod_videotrackerultimate\source_manager;
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
-
+/**
+ * videotrackerultimate_supports
+ *
+ * @param $feature
+ * @return int|string|true|null
+ */
 function videotrackerultimate_supports($feature) {
     return match ($feature) {
         FEATURE_MOD_ARCHETYPE => MOD_ARCHETYPE_OTHER,
@@ -44,6 +48,15 @@ function videotrackerultimate_supports($feature) {
     };
 }
 
+/**
+ * videotrackerultimate_add_instance
+ *
+ * @param stdClass $data
+ * @param mod_videotrackerultimate_mod_form|null $mform
+ * @return int
+ * @throws JsonException
+ * @throws dml_exception
+ */
 function videotrackerultimate_add_instance(stdClass $data, ?mod_videotrackerultimate_mod_form $mform = null): int {
     global $DB;
 
@@ -60,6 +73,16 @@ function videotrackerultimate_add_instance(stdClass $data, ?mod_videotrackerulti
     return $id;
 }
 
+/**
+ * videotrackerultimate_update_instance
+ *
+ * @param stdClass $data
+ * @param mod_videotrackerultimate_mod_form|null $mform
+ * @return bool
+ * @throws JsonException
+ * @throws coding_exception
+ * @throws dml_exception
+ */
 function videotrackerultimate_update_instance(stdClass $data, ?mod_videotrackerultimate_mod_form $mform = null): bool {
     global $DB, $USER;
 
@@ -79,6 +102,15 @@ function videotrackerultimate_update_instance(stdClass $data, ?mod_videotrackeru
     return $result;
 }
 
+/**
+ * videotrackerultimate_delete_instance
+ *
+ * @param int $id
+ * @return bool
+ * @throws coding_exception
+ * @throws dml_exception
+ * @throws dml_transaction_exception
+ */
 function videotrackerultimate_delete_instance(int $id): bool {
     global $DB;
 
@@ -102,6 +134,14 @@ function videotrackerultimate_delete_instance(int $id): bool {
     return true;
 }
 
+/**
+ * videotrackerultimate_grade_item_update
+ *
+ * @param stdClass $activity
+ * @param $grades
+ * @return int
+ * @throws coding_exception
+ */
 function videotrackerultimate_grade_item_update(stdClass $activity, $grades = null): int {
     if ($grades !== null && !empty($activity->usegrade)) {
         global $CFG;
@@ -125,10 +165,25 @@ function videotrackerultimate_grade_item_update(stdClass $activity, $grades = nu
     return grade_manager::update_item($activity);
 }
 
+/**
+ * videotrackerultimate_grade_item_delete
+ *
+ * @param stdClass $activity
+ * @return int
+ */
 function videotrackerultimate_grade_item_delete(stdClass $activity): int {
     return grade_manager::delete_item($activity);
 }
 
+/**
+ * videotrackerultimate_update_grades
+ *
+ * @param stdClass $activity
+ * @param int $userid
+ * @param bool $nullifnone
+ * @return void
+ * @throws dml_exception
+ */
 function videotrackerultimate_update_grades(stdClass $activity, int $userid = 0, bool $nullifnone = true): void {
     global $DB;
 
@@ -146,6 +201,13 @@ function videotrackerultimate_update_grades(stdClass $activity, int $userid = 0,
     }
 }
 
+/**
+ * videotrackerultimate_get_coursemodule_info
+ *
+ * @param stdClass $cm
+ * @return cached_cm_info|null
+ * @throws dml_exception
+ */
 function videotrackerultimate_get_coursemodule_info(stdClass $cm): ?cached_cm_info {
     global $DB;
 
@@ -173,6 +235,13 @@ function videotrackerultimate_get_coursemodule_info(stdClass $cm): ?cached_cm_in
     return $info;
 }
 
+/**
+ * videotrackerultimate_get_completion_active_rule_descriptions
+ *
+ * @param cached_cm_info $cm
+ * @return array
+ * @throws coding_exception
+ */
 function videotrackerultimate_get_completion_active_rule_descriptions(cached_cm_info $cm): array {
     if ((int)$cm->completion !== COMPLETION_TRACKING_AUTOMATIC) {
         return [];
@@ -191,6 +260,16 @@ function videotrackerultimate_get_completion_active_rule_descriptions(cached_cm_
     return $descriptions;
 }
 
+/**
+ * videotrackerultimate_get_completion_state
+ *
+ * @param $course
+ * @param $cm
+ * @param int $userid
+ * @param bool $type
+ * @return bool
+ * @throws dml_exception
+ */
 function videotrackerultimate_get_completion_state($course, $cm, int $userid, bool $type): bool {
     global $DB;
 

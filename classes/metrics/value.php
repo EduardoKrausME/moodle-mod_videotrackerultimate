@@ -37,23 +37,23 @@ final class value {
      */
     public int $duration = 0;
     /**
-     * Property uniqueWatchTime.
+     * Property uniquewatchtime.
      *
      * @var int
      */
-    public int $uniqueWatchTime = 0;
+    public int $uniquewatchtime = 0;
     /**
-     * Property playbackTime.
+     * Property playbacktime.
      *
      * @var int
      */
-    public int $playbackTime = 0;
+    public int $playbacktime = 0;
     /**
-     * Property sessionTime.
+     * Property sessiontime.
      *
      * @var int
      */
-    public int $sessionTime = 0;
+    public int $sessiontime = 0;
     /**
      * Property sessions.
      *
@@ -61,47 +61,47 @@ final class value {
      */
     public int $sessions = 0;
     /**
-     * Property pauseCount.
+     * Property pausecount.
      *
      * @var int
      */
-    public int $pauseCount = 0;
+    public int $pausecount = 0;
     /**
-     * Property seekCount.
+     * Property seekcount.
      *
      * @var int
      */
-    public int $seekCount = 0;
+    public int $seekcount = 0;
     /**
-     * Property replayCount.
+     * Property replaycount.
      *
      * @var int
      */
-    public int $replayCount = 0;
+    public int $replaycount = 0;
     /**
-     * Property maxRate.
+     * Property maxrate.
      *
      * @var float
      */
-    public float $maxRate = 1.0;
+    public float $maxrate = 1.0;
     /**
-     * Property reachedEnd.
+     * Property reachedend.
      *
      * @var bool
      */
-    public bool $reachedEnd = false;
+    public bool $reachedend = false;
     /**
-     * Property watchedRanges.
+     * Property watchedranges.
      *
      * @var array
      */
-    public array $watchedRanges = [];
+    public array $watchedranges = [];
     /**
-     * Property lastPosition.
+     * Property lastposition.
      *
      * @var int
      */
-    public int $lastPosition = 0;
+    public int $lastposition = 0;
     /**
      * Property regularity.
      *
@@ -118,17 +118,17 @@ final class value {
         return [
             'percent' => $this->percent,
             'duration' => $this->duration,
-            'uniqueWatchTime' => $this->uniqueWatchTime,
-            'playbackTime' => $this->playbackTime,
-            'sessionTime' => $this->sessionTime,
+            'uniqueWatchTime' => $this->uniquewatchtime,
+            'playbackTime' => $this->playbacktime,
+            'sessionTime' => $this->sessiontime,
             'sessions' => $this->sessions,
-            'pauseCount' => $this->pauseCount,
-            'seekCount' => $this->seekCount,
-            'replayCount' => $this->replayCount,
-            'maxRate' => $this->maxRate,
-            'reachedEnd' => $this->reachedEnd,
-            'watchedRanges' => $this->watchedRanges,
-            'lastPosition' => $this->lastPosition,
+            'pauseCount' => $this->pausecount,
+            'seekCount' => $this->seekcount,
+            'replayCount' => $this->replaycount,
+            'maxRate' => $this->maxrate,
+            'reachedEnd' => $this->reachedend,
+            'watchedRanges' => $this->watchedranges,
+            'lastPosition' => $this->lastposition,
             'regularity' => $this->regularity,
         ];
     }
@@ -147,9 +147,9 @@ final class value {
         ] as $field) {
             $value->{$field} = (int)($data[$field] ?? 0);
         }
-        $value->maxRate = (float)($data['maxRate'] ?? 1);
-        $value->reachedEnd = !empty($data['reachedEnd']);
-        $value->watchedRanges = is_array($data['watchedRanges'] ?? null) ? $data['watchedRanges'] : [];
+        $value->maxrate = (float)($data['maxRate'] ?? 1);
+        $value->reachedend = !empty($data['reachedEnd']);
+        $value->watchedranges = is_array($data['watchedRanges'] ?? null) ? $data['watchedRanges'] : [];
         $value->regularity = (float)($data['regularity'] ?? 0);
         return $value;
     }
