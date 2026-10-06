@@ -2,7 +2,8 @@
 namespace mod_videotrackerultimate\rule;
 
 use invalid_parameter_exception;
-use mod_videotrackerultimate\metrics\value;
+use local_video_bridge\analytics\manager as analytics_manager;
+use local_video_bridge\analytics\metrics;
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -21,6 +22,7 @@ final class engine {
     public const SEGMENT_WATCHED = 'segment_watched';
     public const SEEKCOUNT_LTE = 'seekcount_lte';
     public const REPLAYCOUNT_GTE = 'replaycount_gte';
+    public const REGULARITY_GTE = 'regularity_gte';
 
     public static function types(): array {
         return [
@@ -33,6 +35,7 @@ final class engine {
             self::SEGMENT_WATCHED,
             self::SEEKCOUNT_LTE,
             self::REPLAYCOUNT_GTE,
+            self::REGULARITY_GTE,
         ];
     }
 
@@ -65,7 +68,7 @@ final class engine {
         if ($limit <= 0) {
             throw new invalid_parameter_exception('Rule limit must be greater than zero.');
         }
-        if ($type === self::PERCENT_GTE && $limit > 100) {
+        if (in_array($type, [self::PERCENT_GTE, self::REGULARITY_GTE], true) && $limit > 100) {
             throw new invalid_parameter_exception('Percentage cannot be greater than 100.');
         }
         if ($type === self::MAXRATE_LTE && $limit > 16) {
@@ -74,7 +77,7 @@ final class engine {
         return [];
     }
 
-    public static function evaluate(\stdClass $indicator, value $metrics): array {
+    public static function evaluate(\stdClass $indicator, metrics $metrics): array {
         $type = (string)$indicator->ruletype;
         $weight = max(0.0, (float)$indicator->weight);
         $limit = (float)$indicator->limitvalue;
@@ -84,6 +87,7 @@ final class engine {
         $actual = null;
         $ratio = 0.0;
         $binary = false;
+        $hassessions = $metrics->sessions > 0;
 
         switch ($type) {
             case self::PERCENT_GTE:
@@ -102,20 +106,24 @@ final class engine {
                 $actual = $metrics->replayCount;
                 $ratio = self::minimum_ratio((float)$actual, $limit);
                 break;
+            case self::REGULARITY_GTE:
+                $actual = $metrics->regularity;
+                $ratio = self::minimum_ratio((float)$actual, $limit);
+                break;
             case self::SESSIONS_LTE:
                 $actual = $metrics->sessions;
                 $binary = true;
-                $ratio = (float)$actual <= $limit ? 1.0 : 0.0;
+                $ratio = $hassessions && (float)$actual <= $limit ? 1.0 : 0.0;
                 break;
             case self::MAXRATE_LTE:
                 $actual = $metrics->maxRate;
                 $binary = true;
-                $ratio = (float)$actual <= $limit ? 1.0 : 0.0;
+                $ratio = $hassessions && (float)$actual <= $limit ? 1.0 : 0.0;
                 break;
             case self::SEEKCOUNT_LTE:
                 $actual = $metrics->seekCount;
                 $binary = true;
-                $ratio = (float)$actual <= $limit ? 1.0 : 0.0;
+                $ratio = $hassessions && (float)$actual <= $limit ? 1.0 : 0.0;
                 break;
             case self::REACHED_END:
                 $actual = $metrics->reachedEnd;
@@ -123,7 +131,7 @@ final class engine {
                 $ratio = $metrics->reachedEnd ? 1.0 : 0.0;
                 break;
             case self::SEGMENT_WATCHED:
-                $actual = self::segment_coverage(
+                $actual = analytics_manager::segment_coverage(
                     $metrics->watchedRanges,
                     (float)$config['start'],
                     (float)$config['end']
@@ -153,20 +161,5 @@ final class engine {
 
     private static function minimum_ratio(float $actual, float $target): float {
         return $target > 0 ? min(1.0, max(0.0, $actual / $target)) : 0.0;
-    }
-
-    public static function segment_coverage(array $ranges, float $start, float $end): float {
-        if ($end <= $start) {
-            return 0.0;
-        }
-        $covered = 0.0;
-        foreach ($ranges as $range) {
-            if (!is_array($range) || count($range) < 2) {
-                continue;
-            }
-            $overlap = max(0.0, min($end, (float)$range[1]) - max($start, (float)$range[0]));
-            $covered += $overlap;
-        }
-        return round(min(100, ($covered / ($end - $start)) * 100), 2);
     }
 }
