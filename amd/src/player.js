@@ -1,0 +1,23 @@
+define([], function() {
+    const init = (rootId, config) => {
+        const root = document.getElementById(rootId);
+        if (!root || !config || !config.adaptermodule) {
+            return;
+        }
+
+        require([config.adaptermodule], function(Adapter) {
+            if (Adapter && typeof Adapter.create === 'function') {
+                Adapter.create(root, config);
+                return;
+            }
+            if (typeof Adapter === 'function') {
+                const adapter = new Adapter(root, config);
+                if (typeof adapter.initialise === 'function') {
+                    adapter.initialise();
+                }
+            }
+        });
+    };
+
+    return {init: init};
+});

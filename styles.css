@@ -1,0 +1,49 @@
+.mod-videotrackerultimate .videotrackerultimate-player {
+    overflow: hidden;
+}
+
+.mod-videotrackerultimate .videotrackerultimate-score-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.mod-videotrackerultimate .videotrackerultimate-status {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: .25rem 0 1rem;
+}
+
+.mod-videotrackerultimate .vtu-range-map {
+    position: relative;
+    height: 18px;
+    border-radius: 9px;
+    background: rgba(0, 0, 0, .08);
+    overflow: hidden;
+}
+
+.mod-videotrackerultimate .vtu-range {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: currentColor;
+    opacity: .65;
+}
+
+.mod-videotrackerultimate .vtu-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.mod-videotrackerultimate .vtu-kpi {
+    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, .12);
+    border-radius: .5rem;
+}
+
+.mod-videotrackerultimate .vtu-kpi-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+}
