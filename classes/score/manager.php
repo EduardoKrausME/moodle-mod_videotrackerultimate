@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 namespace mod_videotrackerultimate\score;
 
 use completion_info;
@@ -15,8 +30,20 @@ defined('MOODLE_INTERNAL') || die;
  * Authoritative server-side Engagement Score service.
  *
  * @package mod_videotrackerultimate
+ * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 final class manager {
+    /**
+     * Method recalculate.
+     *
+     * @param context_module $context Parameter context.
+     * @param \stdClass $activity Parameter activity.
+     * @param int $userid Parameter userid.
+     * @param string $origin Parameter origin.
+     * @param int $triggeredby Parameter triggeredby.
+     * @return \stdClass Return value.
+     */
     public static function recalculate(context_module $context, \stdClass $activity, int $userid,
             string $origin = 'manual', int $triggeredby = 0): \stdClass {
         global $DB;
@@ -115,6 +142,13 @@ final class manager {
         return $record;
     }
 
+    /**
+     * Method get_cached.
+     *
+     * @param int $activityid Parameter activityid.
+     * @param int $userid Parameter userid.
+     * @return ?\stdClass Return value.
+     */
     public static function get_cached(int $activityid, int $userid): ?\stdClass {
         global $DB;
         $record = $DB->get_record('videotrackerultimate_score', [
@@ -124,6 +158,15 @@ final class manager {
         return $record ?: null;
     }
 
+    /**
+     * Method queue_user.
+     *
+     * @param int $cmid Parameter cmid.
+     * @param int $userid Parameter userid.
+     * @param string $origin Parameter origin.
+     * @param int $triggeredby Parameter triggeredby.
+     * @return void Return value.
+     */
     public static function queue_user(int $cmid, int $userid, string $origin, int $triggeredby = 0): void {
         $task = new recalculate_user_task();
         $task->set_component('mod_videotrackerultimate');
@@ -136,6 +179,14 @@ final class manager {
         \core\task\manager::queue_adhoc_task($task, true);
     }
 
+    /**
+     * Method queue_activity.
+     *
+     * @param \stdClass $cm Parameter cm.
+     * @param string $origin Parameter origin.
+     * @param int $triggeredby Parameter triggeredby.
+     * @return int Return value.
+     */
     public static function queue_activity(\stdClass $cm, string $origin, int $triggeredby = 0): int {
         $context = context_module::instance($cm->id);
         $users = get_enrolled_users($context, 'mod/videotrackerultimate:view', 0, 'u.id');
@@ -145,6 +196,13 @@ final class manager {
         return count($users);
     }
 
+    /**
+     * Method status_code.
+     *
+     * @param \stdClass $activity Parameter activity.
+     * @param float $score Parameter score.
+     * @return string Return value.
+     */
     public static function status_code(\stdClass $activity, float $score): string {
         if ($score >= (float)$activity->excellentmin) {
             return 'excellent';
@@ -158,6 +216,13 @@ final class manager {
         return 'insufficient';
     }
 
+    /**
+     * Method status_label.
+     *
+     * @param \stdClass $activity Parameter activity.
+     * @param string $statuscode Parameter statuscode.
+     * @return string Return value.
+     */
     public static function status_label(\stdClass $activity, string $statuscode): string {
         return match ($statuscode) {
             'excellent' => (string)$activity->excellentlabel,
@@ -167,6 +232,13 @@ final class manager {
         };
     }
 
+    /**
+     * Method completion_met.
+     *
+     * @param \stdClass $activity Parameter activity.
+     * @param ?\stdClass $score Parameter score.
+     * @return bool Return value.
+     */
     public static function completion_met(\stdClass $activity, ?\stdClass $score): bool {
         if (!$score) {
             return false;
@@ -192,6 +264,16 @@ final class manager {
         return true;
     }
 
+    /**
+     * Method update_completion.
+     *
+     * @param context_module $context Parameter context.
+     * @param \stdClass $activity Parameter activity.
+     * @param int $userid Parameter userid.
+     * @param \stdClass $score Parameter score.
+     * @param array $breakdown Parameter breakdown.
+     * @return void Return value.
+     */
     private static function update_completion(context_module $context, \stdClass $activity, int $userid,
             \stdClass $score, array $breakdown): void {
         global $DB;

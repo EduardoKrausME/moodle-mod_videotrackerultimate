@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 use mod_videotrackerultimate\source_manager;
 
 defined('MOODLE_INTERNAL') || die;
@@ -9,8 +24,15 @@ require_once($CFG->dirroot . '/course/moodleform_mod.php');
  * Activity configuration form.
  *
  * @package mod_videotrackerultimate
+ * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mod_videotrackerultimate_mod_form extends moodleform_mod {
+    /**
+     * Method definition.
+     *
+     * @return void Return value.
+     */
     public function definition(): void {
         $mform = $this->_form;
         $bridge = source_manager::create();
@@ -68,6 +90,11 @@ class mod_videotrackerultimate_mod_form extends moodleform_mod {
         $this->add_action_buttons();
     }
 
+    /**
+     * Method add_completion_rules.
+     *
+     * @return array Return value.
+     */
     public function add_completion_rules(): array {
         $mform = $this->_form;
 
@@ -85,12 +112,24 @@ class mod_videotrackerultimate_mod_form extends moodleform_mod {
         return ['completionminscore', 'completionminpercent', 'completionindicators'];
     }
 
+    /**
+     * Method completion_rule_enabled.
+     *
+     * @param mixed $data Parameter data.
+     * @return bool Return value.
+     */
     public function completion_rule_enabled($data): bool {
         return (float)($data['completionminscore'] ?? 0) > 0
             || (int)($data['completionminpercent'] ?? 0) > 0
             || !empty($data['completionindicators']);
     }
 
+    /**
+     * Method data_preprocessing.
+     *
+     * @param mixed $defaultvalues Parameter defaultvalues.
+     * @return void Return value.
+     */
     public function data_preprocessing(&$defaultvalues): void {
         parent::data_preprocessing($defaultvalues);
         if (!empty($this->current->id) && !empty($this->context)) {
@@ -98,6 +137,13 @@ class mod_videotrackerultimate_mod_form extends moodleform_mod {
         }
     }
 
+    /**
+     * Method validation.
+     *
+     * @param mixed $data Parameter data.
+     * @param mixed $files Parameter files.
+     * @return array Return value.
+     */
     public function validation($data, $files): array {
         $errors = parent::validation($data, $files);
         $errors += source_manager::create()->validation($data, $files);

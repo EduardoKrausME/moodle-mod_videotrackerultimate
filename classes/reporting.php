@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 namespace mod_videotrackerultimate;
 
 use context_module;
@@ -10,8 +25,17 @@ defined('MOODLE_INTERNAL') || die;
  * Group-aware reporting helpers.
  *
  * @package mod_videotrackerultimate
+ * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 final class reporting {
+    /**
+     * Method visible_users.
+     *
+     * @param \stdClass $cm Parameter cm.
+     * @param context_module $context Parameter context.
+     * @return array Return value.
+     */
     public static function visible_users(\stdClass $cm, context_module $context): array {
         $users = get_enrolled_users(
             $context,
@@ -37,6 +61,14 @@ final class reporting {
         return $users;
     }
 
+    /**
+     * Method rows.
+     *
+     * @param \stdClass $cm Parameter cm.
+     * @param \stdClass $activity Parameter activity.
+     * @param context_module $context Parameter context.
+     * @return array Return value.
+     */
     public static function rows(\stdClass $cm, \stdClass $activity, context_module $context): array {
         $rows = [];
         foreach (self::visible_users($cm, $context) as $user) {
@@ -54,6 +86,13 @@ final class reporting {
         return $rows;
     }
 
+    /**
+     * Method summary.
+     *
+     * @param array $rows Parameter rows.
+     * @param \stdClass $activity Parameter activity.
+     * @return array Return value.
+     */
     public static function summary(array $rows, \stdClass $activity): array {
         $calculated = array_values(array_filter($rows, static fn($row): bool => !empty($row->score)));
         if (!$calculated) {

@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 namespace mod_videotrackerultimate\rule;
 
 use invalid_parameter_exception;
@@ -11,6 +26,8 @@ defined('MOODLE_INTERNAL') || die;
  * Deterministic, allow-listed Engagement Score rule engine.
  *
  * @package mod_videotrackerultimate
+ * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 final class engine {
     public const PERCENT_GTE = 'percent_gte';
@@ -24,6 +41,11 @@ final class engine {
     public const REPLAYCOUNT_GTE = 'replaycount_gte';
     public const REGULARITY_GTE = 'regularity_gte';
 
+    /**
+     * Method types.
+     *
+     * @return array Return value.
+     */
     public static function types(): array {
         return [
             self::PERCENT_GTE,
@@ -39,6 +61,14 @@ final class engine {
         ];
     }
 
+    /**
+     * Method validate.
+     *
+     * @param string $type Parameter type.
+     * @param float $limit Parameter limit.
+     * @param array $config Parameter config.
+     * @return array Return value.
+     */
     public static function validate(string $type, float $limit, array $config = []): array {
         if (!in_array($type, self::types(), true)) {
             throw new invalid_parameter_exception('Unknown Engagement Score rule type.');
@@ -77,6 +107,13 @@ final class engine {
         return [];
     }
 
+    /**
+     * Method evaluate.
+     *
+     * @param \stdClass $indicator Parameter indicator.
+     * @param metrics $metrics Parameter metrics.
+     * @return array Return value.
+     */
     public static function evaluate(\stdClass $indicator, metrics $metrics): array {
         $type = (string)$indicator->ruletype;
         $weight = max(0.0, (float)$indicator->weight);
@@ -159,6 +196,13 @@ final class engine {
         ];
     }
 
+    /**
+     * Method minimum_ratio.
+     *
+     * @param float $actual Parameter actual.
+     * @param float $target Parameter target.
+     * @return float Return value.
+     */
     private static function minimum_ratio(float $actual, float $target): float {
         return $target > 0 ? min(1.0, max(0.0, $actual / $target)) : 0.0;
     }
