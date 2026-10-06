@@ -27,6 +27,7 @@ defined('MOODLE_INTERNAL') || die;
 $functions = [
     'mod_videotrackerultimate_get_score' => [
         'classname' => '\mod_videotrackerultimate\external\get_score',
+        'methodname' => 'execute',
         'description' => 'Returns an explainable cached Engagement Score.',
         'type' => 'read',
         'ajax' => true,
@@ -34,6 +35,7 @@ $functions = [
     ],
     'mod_videotrackerultimate_recalculate_user' => [
         'classname' => '\mod_videotrackerultimate\external\recalculate_user',
+        'methodname' => 'execute',
         'description' => 'Queues a server-side analytics recalculation for an allowed user.',
         'type' => 'write',
         'ajax' => true,
