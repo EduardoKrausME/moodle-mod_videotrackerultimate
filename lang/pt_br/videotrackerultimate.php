@@ -124,6 +124,7 @@ $string['ruletype'] = 'Tipo de regra';
 $string['ruletype:maxrate_lte'] = 'Velocidade máxima <= X';
 $string['ruletype:percent_gte'] = 'Percentual assistido >= X';
 $string['ruletype:reachedend'] = 'Chegou ao final do vídeo';
+$string['ruletype:regularity_gte'] = 'Regularidade da reprodução >= X%';
 $string['ruletype:replaycount_gte'] = 'Quantidade de revisões/replays >= X';
 $string['ruletype:seekcount_lte'] = 'Quantidade de seeks <= X';
 $string['ruletype:segment_watched'] = 'Segmento configurado assistido';

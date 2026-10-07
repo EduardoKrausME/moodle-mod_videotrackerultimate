@@ -124,6 +124,7 @@ $string['ruletype'] = 'Rule type';
 $string['ruletype:maxrate_lte'] = 'Maximum playback rate is at most X';
 $string['ruletype:percent_gte'] = 'Watched percentage is at least X';
 $string['ruletype:reachedend'] = 'Reached the end of the video';
+$string['ruletype:regularity_gte'] = 'Playback regularity is at least X%';
 $string['ruletype:replaycount_gte'] = 'Replay count is at least X';
 $string['ruletype:seekcount_lte'] = 'Seek count is at most X';
 $string['ruletype:segment_watched'] = 'Configured segment is watched';

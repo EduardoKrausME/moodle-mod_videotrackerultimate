@@ -127,7 +127,11 @@ if ($data = $form->get_data()) {
     );
 }
 
+$heading = $indicator
+    ? get_string('editindicator', 'videotrackerultimate')
+    : get_string('addindicator', 'videotrackerultimate');
+
 echo $OUTPUT->header();
-echo $OUTPUT->heading($indicator ? get_string('editindicator', 'videotrackerultimate') : get_string('addindicator', 'videotrackerultimate'));
+echo $OUTPUT->heading($heading);
 $form->display();
 echo $OUTPUT->footer();

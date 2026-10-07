@@ -20,6 +20,7 @@ use advanced_testcase;
 use invalid_parameter_exception;
 use local_video_bridge\analytics\metrics;
 use mod_videotrackerultimate\rule\engine;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * Deterministic rule engine tests.
@@ -28,6 +29,7 @@ use mod_videotrackerultimate\rule\engine;
  * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+#[CoversClass(engine::class)]
 final class rule_engine_test extends advanced_testcase {
     /**
      * Method indicator.
@@ -72,7 +74,7 @@ final class rule_engine_test extends advanced_testcase {
      */
     public function test_watchtime_minimum_is_proportional(): void {
         $metrics = new metrics();
-        $metrics->playbackTime = 300;
+        $metrics->playbacktime = 300;
         $this->assertSame(10.0, engine::evaluate($this->indicator(engine::WATCHTIME_GTE, 20, 600), $metrics)['points']);
     }
 
@@ -120,9 +122,9 @@ final class rule_engine_test extends advanced_testcase {
     public function test_maxrate_is_binary(): void {
         $metrics = new metrics();
         $metrics->sessions = 1;
-        $metrics->maxRate = 1.5;
+        $metrics->maxrate = 1.5;
         $this->assertTrue(engine::evaluate($this->indicator(engine::MAXRATE_LTE, 10, 1.5), $metrics)['passed']);
-        $metrics->maxRate = 2.0;
+        $metrics->maxrate = 2.0;
         $this->assertFalse(engine::evaluate($this->indicator(engine::MAXRATE_LTE, 10, 1.5), $metrics)['passed']);
     }
 
@@ -134,7 +136,7 @@ final class rule_engine_test extends advanced_testcase {
     public function test_reached_end_is_binary(): void {
         $metrics = new metrics();
         $this->assertSame(0.0, engine::evaluate($this->indicator(engine::REACHED_END, 10), $metrics)['points']);
-        $metrics->reachedEnd = true;
+        $metrics->reachedend = true;
         $this->assertSame(10.0, engine::evaluate($this->indicator(engine::REACHED_END, 10), $metrics)['points']);
     }
 
@@ -145,7 +147,7 @@ final class rule_engine_test extends advanced_testcase {
      */
     public function test_segment_coverage_is_explainable_and_proportional(): void {
         $metrics = new metrics();
-        $metrics->watchedRanges = [[0, 25], [40, 65]];
+        $metrics->watchedranges = [[0, 25], [40, 65]];
         $result = engine::evaluate($this->indicator(engine::SEGMENT_WATCHED, 20, 0, [
             'start' => 0,
             'end' => 100,
@@ -164,9 +166,9 @@ final class rule_engine_test extends advanced_testcase {
     public function test_seek_maximum_is_binary(): void {
         $metrics = new metrics();
         $metrics->sessions = 1;
-        $metrics->seekCount = 2;
+        $metrics->seekcount = 2;
         $this->assertTrue(engine::evaluate($this->indicator(engine::SEEKCOUNT_LTE, 5, 2), $metrics)['passed']);
-        $metrics->seekCount = 3;
+        $metrics->seekcount = 3;
         $this->assertFalse(engine::evaluate($this->indicator(engine::SEEKCOUNT_LTE, 5, 2), $metrics)['passed']);
     }
 
@@ -177,7 +179,7 @@ final class rule_engine_test extends advanced_testcase {
      */
     public function test_replay_minimum_is_proportional(): void {
         $metrics = new metrics();
-        $metrics->replayCount = 1;
+        $metrics->replaycount = 1;
         $this->assertSame(5.0, engine::evaluate($this->indicator(engine::REPLAYCOUNT_GTE, 10, 2), $metrics)['points']);
     }
 

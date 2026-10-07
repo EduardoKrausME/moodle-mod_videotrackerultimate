@@ -28,10 +28,12 @@ final class restore_videotrackerultimate_activity_structure_step extends restore
      * @return array Return value.
      */
     protected function define_structure(): array {
-        return [
+        $paths = [
             new restore_path_element('videotrackerultimate', '/activity/videotrackerultimate'),
             new restore_path_element('videotrackerultimate_indicator', '/activity/videotrackerultimate/indicators/indicator'),
         ];
+
+        return $this->prepare_activity_structure($paths);
     }
 
     /**
