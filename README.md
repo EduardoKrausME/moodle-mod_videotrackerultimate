@@ -4,12 +4,6 @@ Video Tracker Ultimate is the evidence-oriented activity in the Video Tracker fa
 
 The activity never infers attention, intelligence, learning, motivation, effort, ability or academic mastery. Its score only summarizes the playback facts that a teacher explicitly chose to measure, such as watched coverage, effective playback time, number of sessions, playback rate, seeks, replays, reaching the end and coverage of selected timeline segments.
 
-## Requirements and installation
-
-**Required dependency:** [Moodle Video Bridge (`local_video_bridge`)](https://github.com/EduardoKrausME/moodle-local_video_bridge), version `2026100618` or later. The Video Bridge plugin is not bundled with this activity; install it in `local/video_bridge` before installing or upgrading `mod_videotrackerultimate`.
-
-Video Bridge requires Moodle 4.5 or later and currently also depends on `local_ai_bridge`. Install its dependencies and complete the upgrade through **Site administration > Notifications**. An installation limited to plugins available on the Moodle Marketplace must ensure that these required plugins are available there; the activity cannot run without Video Bridge.
-
 ## Explainable Engagement Score
 
 Teachers build indicators from a fixed catalogue of safe rules. There is no expression language, PHP, JavaScript, SQL, `eval()` or executable teacher input.
